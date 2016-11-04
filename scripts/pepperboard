@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+from pepperboard import core
+
+if __name__ == '__main__':
+    core.pepper_main()
