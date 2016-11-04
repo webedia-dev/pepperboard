@@ -26,6 +26,14 @@ For now, it needs to be run directly on the salt-master server
     ```
   * If you want to use psutil from the pip package, simply install the python-dev package.
 ## Installation
+First, install the dependencies given in the dependencies section.
+
+Then you have 3 ways to install Pepperboard :
+
+Using pip :
+```
+pip install pepperboard
+```
 From the upstream repository :
 ```
 pip install git+https://github.com/webedia-dev/pepperboard.git
