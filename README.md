@@ -38,7 +38,7 @@ python setup.py install
 # Usage
   * Simple list of available arguments :
     * --help|-h : Prints an awesome help message
-    * --output=|-o : comma separated values of files to write dashboards given with the \"-d\" argument.
+    * --output=|-o : comma separated values of files to write dashboards given with the "-d" argument.
     * --dashboards=|-d : comma separated values of dashboards.
     * --threads=|-t : comma separated values of threads count to be used (must be greater than 0). Prefix the number by "f" if you want more threads than CPU cores count.
     * --grains=|-g : comma separated values of grains to be used with the mgrains dashboard. This argument implies "-d 'mgrains'".
