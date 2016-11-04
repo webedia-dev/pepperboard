@@ -12,6 +12,7 @@ setup(
     packages=['pepperboard', 'pepperboard.core', 'pepperboard.dashboards'],
     scripts=['scripts/pepperboard'],
     url='https://github.com/webedia-dev/pepperboard',
+    download_url='https://github.com/webedia-dev/pepperboard/releases/tag/v1',
     license='Apache',
     author='Cyril LAVIER',
     author_email='cyril.lavier@webedia-group.com',
