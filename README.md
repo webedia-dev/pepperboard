@@ -26,7 +26,7 @@ For now, it needs to be run directly on the salt-master server
 ## Installation
 From the upstream repository :
 ```
-pip install -e git+https://github.com/webedia-dev/pepperboard.git
+pip install git+https://github.com/webedia-dev/pepperboard.git
 ```
 From a copy of the upstream repository :
 ```
