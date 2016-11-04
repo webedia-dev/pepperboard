@@ -18,9 +18,7 @@ For now, it needs to be run directly on the salt-master server
     * futures
     * psutil
     * salt
-    * pypandoc (only when built from source)
   * External tools :
-    * pandoc (for pypandoc)
     * salt-master (needs to be run on the salt master)
 
 ## Installation

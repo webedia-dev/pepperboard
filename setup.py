@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pypandoc
-
 from setuptools import setup
-
-readme = pypandoc.convert_file('README.md','rst')
 
 with open('requirements.txt') as requirements_file:
     requirements = requirements_file.read().splitlines()
@@ -20,7 +16,6 @@ setup(
     author='Cyril LAVIER',
     author_email='cyril.lavier@webedia-group.com',
     description='Simple and modular dashboard toolkit for SaltStack',
-    long_description=readme,
     install_requires=requirements,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
