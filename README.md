@@ -20,7 +20,11 @@ For now, it needs to be run directly on the salt-master server
     * salt
   * External tools :
     * salt-master (needs to be run on the salt master)
-
+  * Using Debian Jessie (with Backports enabled) :
+    ```
+    aptitude install python-psutil python-concurrent.futures
+    ```
+  * If you want to use psutil from the pip package, simply install the python-dev package.
 ## Installation
 From the upstream repository :
 ```
