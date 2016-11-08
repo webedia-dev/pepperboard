@@ -71,6 +71,8 @@ python setup.py install
       * Example : ```pepperboard -d 'upgrades,highstates,mgrains' -o '/var/www/upgrades.html,/var/www/highstates.html,/var/www/customgrains.html' -g 'manufacturer,productname,serialnumber'```
       * When this argument is specified we can omit "mgrains" in the dashboard list.
 
+Some screenshots are available in the screenshots folder.
+
 # Dashboards
   * upgrades : Displays a list of upgradable packages for each minion (equivalent to "salt '*' pkg.list_upgrades")
   * highstates : Displays a list of unsynchronised states for each minion (equivalent to "salt '*' state.highstate test=True)
