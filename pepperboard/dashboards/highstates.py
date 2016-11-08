@@ -70,7 +70,9 @@ def gendash(output, nthreads):
             foutput.write(resultod[s])
     end = datetime.now()
     d = end - begin
-    foutput.write('</tbody></table>' + str(len(nostate)) + ' servers in good state.</br>Unreachable minions : ' + ",".join(
-        mdown) + '.</br>Last updated on ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '.<br/>Generated in ' + str(
+    foutput.write('</tbody></table>' + str(len(nostate)) + ' servers in good state.</br>')
+    if len(mdown) > 0:
+        foutput.write('Unreachable minions : ' + ",".join(mdown) + '.</br>')
+    foutput.write('Last updated on ' + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '.<br/>Generated in ' + str(
         d.seconds) + ' seconds.</body></html>')
     foutput.close()
