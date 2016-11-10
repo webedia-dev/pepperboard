@@ -8,9 +8,10 @@ For now, it needs to be run directly on the salt-master server
 1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Dashboards](#dashboards)
-4. [Development](#development)
-5. [TODO](#todo)
-6. [Licence and copyright](#licence-and-copyright)
+4. [Screenshots](#screenshots)
+5. [Development](#development)
+6. [TODO](#todo)
+7. [Licence and copyright](#licence-and-copyright)
 
 # Installation
 ## Dependencies
@@ -28,7 +29,7 @@ For now, it needs to be run directly on the salt-master server
 ## Installation
 First, install the dependencies given in the dependencies section.
 
-Then you have 3 ways to install Pepperboard :
+Then you have 3 ways to install Pepperboard (all using the root user) :
 
 Using pip :
 ```
@@ -87,8 +88,6 @@ python setup.py install
       * When this argument is specified we can omit "mgrains" in the dashboard list.
   * Exemple of crontab (in /etc/crontab) :
     * ```30 1   * * *	root	pepperboard -d 'upgrades,highstates' -o '/var/www/dash_upgrades.html,/var/www/dash_highstates.html' -t 'f8,4'```
-
-Some screenshots are available in the screenshots folder.
 
 # Dashboards
   * upgrades : Displays a list of upgradable packages for each minion (equivalent to "salt '*' pkg.list_upgrades")
