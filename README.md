@@ -54,13 +54,13 @@ python setup.py install
       * dashboard upgrades : pkg.list_upgrades
       * dashboard mgrains : grains.items
     * Something like that in the master configuration should do the trick :
-      ```
-      client_acl:
-        __username__:
-          - state.highstate
-          - pkg.list_upgrades
-          - grains.items
-       ```
+    ```
+    client_acl:
+      __username__:
+        - state.highstate
+        - pkg.list_upgrades
+        - grains.items
+    ```
     * It also need the right to write the output files.
   * Simple list of available arguments :
     * --help|-h : Prints an awesome help message
