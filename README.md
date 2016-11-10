@@ -26,6 +26,7 @@ For now, it needs to be run directly on the salt-master server
     aptitude install python-psutil python-concurrent.futures
     ```
   * If you want to use psutil from the pip package, simply install the python-dev package.
+
 ## Installation
 First, install the dependencies given in the dependencies section.
 
