@@ -46,6 +46,21 @@ python setup.py install
 ```
 
 # Usage
+  * It needs to be run locally on the Salt Master server.
+  * It's preferable to run pepperboard as the root user, because it needs rights on the salt-master.
+    * If you don't want it, here is the rights list you need to allow on the user for each dashboard :
+      * dashboard highstates : state.highstate
+      * dashboard upgrades : pkg.list_upgrades
+      * dashboard mgrains : grains.items
+    * Something like that in the master configuration should do the trick :
+      ```
+      client_acl:
+        __username__:
+          - state.highstate
+          - pkg.list_upgrades
+          - grains.items
+       ```
+    * It also need the right to write the output files.
   * Simple list of available arguments :
     * --help|-h : Prints an awesome help message
     * --output=|-o : comma separated values of files to write dashboards given with the "-d" argument.
@@ -70,6 +85,8 @@ python setup.py install
     * --grains|-g : Specify the grains to be included in the mgrains dashboard.
       * Example : ```pepperboard -d 'upgrades,highstates,mgrains' -o '/var/www/upgrades.html,/var/www/highstates.html,/var/www/customgrains.html' -g 'manufacturer,productname,serialnumber'```
       * When this argument is specified we can omit "mgrains" in the dashboard list.
+  * Exemple of crontab (in /etc/crontab) :
+    * ```30 1   * * *	root	pepperboard -d 'upgrades,highstates' -o '/var/www/dash_upgrades.html,/var/www/dash_highstates.html' -t 'f8,4'```
 
 Some screenshots are available in the screenshots folder.
 
@@ -77,6 +94,17 @@ Some screenshots are available in the screenshots folder.
   * upgrades : Displays a list of upgradable packages for each minion (equivalent to "salt '*' pkg.list_upgrades")
   * highstates : Displays a list of unsynchronised states for each minion (equivalent to "salt '*' state.highstate test=True)
   * mgrains : Displays a list of grains for each minion
+
+# Screenshots
+  * upgrades dashboard (using ```pepperboard -d 'upgrades' -o '/var/www/dash_upgrades.html' -t 'f8'```) : 
+
+    ![pepperboard_upgrades](screenshots/pepperboard_upgrades.png)
+  * Highstates dashboard (using ```pepperboard -d 'highstates' -o '/var/www/dash_highstates.html' -t '4'```):
+  
+    ![pepperboard_highstates](screenshots/pepperboard_highstates.png)
+  * Mgrains dashboard (using ```pepperboard -o '/var/www/dash_mgrains.html' -t 'f32' -g 'server_id,shell,num_cpus,num_gpus'```)
+
+    ![pepperboard_mgrains](screenshots/pepperboard_mgrains.png)
 
 # Development
   * Create a new dashboard : Simply add a new python script in the dashboard package
@@ -103,9 +131,7 @@ Some screenshots are available in the screenshots folder.
             * Can be set to None for either using the default thread count or not using threads at all.
 
 # TODO
-  * Add more "security" code to sanitize inputs and module loading.
   * Fix this README file and general documentation.
-  * Upload it to Pypi.
   * Use pepper to use salt-api.
   * Get the OS logos from PNG/JPG files instead of having base64 directly in python code.
   * Make the dashboard list a little bit prettier.
