@@ -34,9 +34,12 @@ def gendash(output, nthreads):
                         len(
                             tbc)) + ' states to be changed</a><div class=\"hstlist\" id=\"' + server + '\" style=\"display:none\"><ul>' + ''.join(
                         tbc) + '</ul></div>'
-                    result[server] = '<tr><td valign=\"top\"><img src=\"data:image/png;base64,' + core.logos[
-                        c.cmd(server, 'grains.items')[server][
-                            'os'].lower()] + '\"/> ' + server + '</td><td>' + display + '</td></tr>\n'
+                    minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
+                    if minionos in core.logos:
+                        displogo = '<img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/> '
+                    else:
+                        displogo = ''
+                    result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>' + display + '</td></tr>\n'
             else:
                 result[server] = '<tr><td><img src=\"/' + c.cmd(server, 'grains.items')[server][
                     'os'].lower() + '.png\"/> ' + server + '</td><td>Error during states retrieveing (' + hst[

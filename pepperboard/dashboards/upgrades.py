@@ -31,9 +31,12 @@ def gendash(output, nthreads):
                                 server])) + '</a><div class=\"pkglist\" id=\"' + server + '\" style=\"display:none\"><ul>' + ''.join(
                         ['<li>{} : {}</li>'.format(k, v) for k, v in
                          collections.OrderedDict(sorted(upd[server].items())).iteritems()]) + '</ul></div>'
-                result[server] = '<tr><td valign=\"top\"><img src=\"data:image/png;base64,' + core.logos[
-                    c.cmd(server, 'grains.items')[server][
-                        'os'].lower()] + '\"/> ' + server + '</td><td>' + displaypkgs + '</td></tr>\n'
+                minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
+                if minionos in core.logos:
+                    displogo = '<img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/> '
+                else:
+                    displogo = ''
+                result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>' + displaypkgs + '</td></tr>\n'
             else:
                 result[server] = '<tr><td><img src=\"/' + c.cmd(server, 'grains.items')[server][
                     'os'].lower() + '.png\"/> ' + server + '</td><td>Error during upgrades retrieveing (' + upd[
