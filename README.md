@@ -69,10 +69,12 @@ python setup.py install
     * --dashboards=|-d : comma separated values of dashboards.
     * --threads=|-t : comma separated values of threads count to be used (must be greater than 0). Prefix the number by "f" if you want more threads than CPU cores count.
     * --grains=|-g : comma separated values of grains to be used with the mgrains dashboard. This argument implies "-d 'mgrains'".
+    * --dellapikey=|-a : Dell API key used by the dellwarranty dashboard. This argument implies "-d 'mgrains'".
     * --list|-l : List available dashboards.
   * List available dashboards :```pepperboard -l```
     * Example output :
     ```
+    dellwarranty
     highstates
     upgrades
     mgrains
@@ -87,10 +89,15 @@ python setup.py install
     * --grains|-g : Specify the grains to be included in the mgrains dashboard.
       * Example : ```pepperboard -d 'upgrades,highstates,mgrains' -o '/var/www/upgrades.html,/var/www/highstates.html,/var/www/customgrains.html' -g 'manufacturer,productname,serialnumber'```
       * When this argument is specified we can omit "mgrains" in the dashboard list.
+    * --dellapikey|-a : Specify the Dell API key to be used with the dellwarranty dashboard.
+      * Example : ```pepperboard -o '/var/www/dellwarranty.html' -t '4' -a '__dell_api_key__'```
+      * When this argument is specified we can omit "dellwarranty" in the dashboard list.
   * Exemple of crontab (in /etc/crontab) :
     * ```30 1   * * *	root	pepperboard -d 'upgrades,highstates' -o '/var/www/dash_upgrades.html,/var/www/dash_highstates.html' -t 'f8,4'```
 
 # Dashboards
+  * dellwarranty : Displays the warranty of all minions that are Dell servers
+    * You need to request a API key from Dell to use this dashboard
   * upgrades : Displays a list of upgradable packages for each minion (equivalent to "salt '*' pkg.list_upgrades")
   * highstates : Displays a list of unsynchronised states for each minion (equivalent to "salt '*' state.highstate test=True)
   * mgrains : Displays a list of grains for each minion
@@ -105,6 +112,9 @@ python setup.py install
   * Mgrains dashboard (using ```pepperboard -o '/var/www/dash_mgrains.html' -t 'f32' -g 'server_id,shell,num_cpus,num_gpus'```)
 
     ![pepperboard_mgrains](screenshots/pepperboard_mgrains.png)
+  * Dellwarranty dashboard (using ```pepperboard -o '/var/www/dellwarranty.html' -t '4' -a '__dell_api_key__'```
+  
+    ![pepperboard_mgrains](screenshots/pepperboard_dellwarranty.png)
 
 # Development
   * Create a new dashboard : Simply add a new python script in the dashboard package

@@ -20,6 +20,7 @@ def usage():
     print "--dashboards=|-d : comma separated values of dashboards"
     print "--threads=|-t : comma separated values of threads count to be used (must be greater than 0). Prefix the number by \"f\" if you want more threads than CPU core count"
     print "--grains=|-g : comma separated values of grains to be used with the mgrains dashboard. This argument implies \"-d 'mgrains'\""
+    print "--dellapikey=|-a : Dell API key used by the dellwarranty dashboard. This argument implies \"-d 'mgrains'\""
     print "--list|-l : List available dashboards"
 
 
@@ -30,8 +31,8 @@ def pepper_main():
         sys.exit(2)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'o:d:t:g:lh',
-                                   ['output=', 'dashboards=', 'threads=', 'grains=', 'list', 'help'])
+        opts, args = getopt.getopt(sys.argv[1:], 'o:d:t:g:a:lh',
+                                   ['output=', 'dashboards=', 'threads=', 'grains=', 'dellapikey=', 'list', 'help'])
     except getopt.GetoptError as err:
         print str(err)
         usage()
@@ -45,7 +46,7 @@ def pepper_main():
     nthreads = list()
     raw_nthreads = list()
     grains = list()
-
+    dellapikey = ''
     for o, a in opts:
         if o in ("-o", "--output"):
             if not a:
@@ -98,6 +99,15 @@ def pepper_main():
                 if not "mgrains" in dashs:
                     dashs.append("mgrains")
                 grains = a.split(',')
+        elif o in ("-a", "--dellapikey"):
+            if not a:
+                print "Error : dellapikey argument can't be empty"
+                usage()
+                sys.exit(2)
+            else:
+                if not "dellwarranty" in dashs:
+                    dashs.append("dellwarranty")
+                dellapikey = a
         elif o in ("-l", "--list"):
             print "\n".join(available_dashboards)
         elif o in ("-h", "--help"):
@@ -105,6 +115,14 @@ def pepper_main():
             sys.exit(0)
         else:
             print "Unhandled option"
+
+    if 'mgrains' in dashs and len(grains) == 0:
+        print "Error : You must the grains list when using the mgrains dashboard"
+        sys.exit(2)
+
+    if 'dellwarranty' in dashs and not dellapikey:
+        print "Error : You must set the dellapikey when using the dellwarranty dashboard"
+        sys.exit(2)
 
     if len(nthreads) == 0:
         if not len(outputs) == len(dashs):
@@ -114,6 +132,8 @@ def pepper_main():
             for dash, out in zip(dashs, outputs):
                 if dash == 'mgrains':
                     pepperboard.dashboards.gendashboard(dash, out, None, grains)
+                elif dash == 'dellwarranty':
+                    pepperboard.dashboards.gendashboard(dash, out, None, dellapikey)
                 else:
                     pepperboard.dashboards.gendashboard(dash, out)
     else:
@@ -124,5 +144,7 @@ def pepper_main():
             for dash, out, nth in zip(dashs, outputs, nthreads):
                 if dash == 'mgrains':
                     pepperboard.dashboards.gendashboard(dash, out, nth, grains)
+                elif dash == 'dellwarranty':
+                    pepperboard.dashboards.gendashboard(dash, out, nth, dellapikey)
                 else:
                     pepperboard.dashboards.gendashboard(dash, out, nth)
