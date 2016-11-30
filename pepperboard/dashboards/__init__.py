@@ -25,11 +25,12 @@ def gentable(input, output):
         '<script type=\"text/javascript\">\nfunction toggle_hstlist() {\nvar e = document.querySelectorAll (\".hstlist\")\nfor (var i = 0; i < e.length; i++) {\nvar el = e[i];\nif(el.style.display == \'block\')\nel.style.display = \'none\';\nelse\nel.style.display = \'block\';\n}\n}\n</script>')
     foutput.write(
         '<script type=\"text/javascript\">\nfunction toggle_visibility(id) {\nvar e = document.getElementById(id);\nif(e.style.display == \'block\')\ne.style.display = \'none\';\nelse\ne.style.display = \'block\';\n}\n</script>')
+    foutput.write('<script src=\"//www.kryogenix.org/code/browser/sorttable/sorttable.js\"></script>')
     foutput.write('<link rel=\"stylesheet\" href=\"//yui-s.yahooapis.com/pure/0.6.0/pure-min.css\">')
     foutput.write('<title>Pepperboard</title>')
     foutput.write('</head>')
     foutput.write('<body><div>')
-    foutput.write('<table class=\"pure-table pure-table-bordered\"><thead><tr>')
+    foutput.write('<table class=\"pure-table pure-table-bordered sortable\"><thead><tr>')
     for header in input['headers']:
         foutput.write('<th>'+header+'</th>')
     foutput.write('</tr></thead><tbody>\n')
