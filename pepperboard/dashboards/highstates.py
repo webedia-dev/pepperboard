@@ -56,6 +56,7 @@ def gendash(output, nthreads):
     foutput.write(
         '<script type=\"text/javascript\">\nfunction toggle_visibility(id) {\nvar e = document.getElementById(id);\nif(e.style.display == \'block\')\ne.style.display = \'none\';\nelse\ne.style.display = \'block\';\n}\n</script>')
     foutput.write('<script src=\"//www.kryogenix.org/code/browser/sorttable/sorttable.js\"></script>')
+    foutput.write('<style>table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: \" \\25B4\\25BE\"}</style>')
     foutput.write('<link rel=\"stylesheet\" href=\"//yui-s.yahooapis.com/pure/0.6.0/pure-min.css\">')
     foutput.write('<title>Pepperboard - Out of sync Salt States</title>')
     foutput.write('</head>')
@@ -68,7 +69,7 @@ def gendash(output, nthreads):
         foutput.write('All servers are in good state.<br/>')
     else:
         foutput.write(
-            '<a href = \"javascript:void(0);\" onclick=\"toggle_hstlist();\" style=\"color: #737373\">Toogle all lists</a></div><table class=\"pure-table pure-table-bordered sortable\"><thead><tr><th>Host</th><th>States to be changed in a state.highstate</th></tr></thead><tbody>\n')
+            '<a href = \"javascript:void(0);\" onclick=\"toggle_hstlist();\" style=\"color: #737373\">Toogle all lists</a></div><table class=\"pure-table pure-table-bordered sortable\"><thead><tr><th>Host</th><th class=\"sorttable_numeric\">States to be changed in a state.highstate</th></tr></thead><tbody>\n')
         resultod = collections.OrderedDict(sorted(result.items()))
         for s in resultod:
             foutput.write(resultod[s])
