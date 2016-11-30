@@ -52,7 +52,7 @@ def gendash(output, nthreads):
         '<script type=\"text/javascript\">\nfunction toggle_pkglist() {\nvar e = document.querySelectorAll (\".pkglist\")\nfor (var i = 0; i < e.length; i++) {\nvar el = e[i];\nif(el.style.display == \'block\')\nel.style.display = \'none\';\nelse\nel.style.display = \'block\';\n}\n}\n</script>')
     foutput.write(
         '<script type=\"text/javascript\">\nfunction toggle_visibility(id) {\nvar e = document.getElementById(id);\nif(e.style.display == \'block\')\ne.style.display = \'none\';\nelse\ne.style.display = \'block\';\n}\n</script>')
-    foutput.write('<link rel=\"stylesheet\" href=\"http://yui.yahooapis.com/pure/0.6.0/pure-min.css\">')
+    foutput.write('<link rel=\"stylesheet\" href=\"//yui-s.yahooapis.com/pure/0.6.0/pure-min.css\">')
     foutput.write('<title>Pepperboard - Upgrades</title>')
     foutput.write('</head>')
     foutput.write('<body><div>')
