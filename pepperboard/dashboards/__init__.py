@@ -37,7 +37,12 @@ def gentable(input, output):
     foutput.write('</tr></thead><tbody>\n')
     for k, v in input['data'].iteritems():
         if input['ncol'] == 2:
-            foutput.write('<tr><td valign=\"top\">'+str(k)+'</td><td>'+str(v)+'</td></tr>\n')
+            foutput.write('<tr><td valign=\"top\">'+str(k)+'</td><td>')
+            if isinstance(v,dict):
+                foutput.write(str(v[header]))
+            else:
+                foutput.write(str(v))
+            foutput.write('</td></tr>\n')
         else:
             foutput.write('<tr><td valign=\"top\">'+str(k)+'</td>')
             for header in input['headers'][1:]:
