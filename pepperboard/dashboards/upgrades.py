@@ -38,9 +38,8 @@ def gendash(output, nthreads):
                     displogo = ''
                 result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>' + displaypkgs + '</td></tr>\n'
             else:
-                result[server] = '<tr><td><img src=\"/' + c.cmd(server, 'grains.items')[server][
-                    'os'].lower() + '.png\"/> ' + server + '</td><td>Error during upgrades retrieveing (' + upd[
-                                     server] + ')</td></tr>\n'
+                result[server] = '<tr><td><img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/>' \
+                                 + server + '</td><td>Error during upgrades retrieveing (' + upd[server] + ')</td></tr>\n'
     begin = datetime.now()
     foutput = open(output, 'w')
     opts = salt.config.master_config('/etc/salt/master')
