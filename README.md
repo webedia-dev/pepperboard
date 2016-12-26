@@ -56,11 +56,16 @@ python setup.py install
       * dashboard mgrains : grains.items
     * Something like that in the master configuration should do the trick :
     ```
-    client_acl:
+    publisher_acl:
       __username__:
         - state.highstate
         - pkg.list_upgrades
         - grains.items
+        - .*
+    ```
+    * It needs to be able to access the salt folders, this command should do the trick
+    ```
+    chmod 755 /var/cache/salt /var/cache/salt/master /var/cache/salt/master/jobs /var/run/salt /var/run/salt/master
     ```
     * It also need the right to write the output files.
   * Simple list of available arguments :
