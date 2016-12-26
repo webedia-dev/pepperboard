@@ -24,7 +24,33 @@ def usage():
     print "--list|-l : List available dashboards"
 
 
+def getmasterstatus():
+    import psutil
+    for proc in psutil.process_iter():
+        if proc.name() == 'salt-master':
+            return 0
+    return 1
+
+
+def countminions():
+    import salt.runner
+    opts = salt.config.master_config("/etc/salt/master")
+    opts['quiet'] = True
+    r = salt.runner.RunnerClient(opts)
+    return len(r.cmd('manage.present'))
+
+
 def pepper_main():
+    if getmasterstatus() == 1:
+        print "Error : Your Salt Master isn't running. Exiting..."
+        usage()
+        sys.exit(2)
+
+    if countminions() == 0:
+        print "Error : You don't have any minions registered to the Salt Master. Exiting..."
+        usage()
+        sys.exit(2)
+
     if not sys.argv[1:]:
         print "Error : Pepperboard wrongly called"
         usage()
