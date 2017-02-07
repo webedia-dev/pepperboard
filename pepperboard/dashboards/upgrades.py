@@ -21,6 +21,11 @@ def gendash(output, nthreads):
         c = salt.client.LocalClient()
         upd = c.cmd(server, 'pkg.list_upgrades')
         if server in upd:
+            minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
+            if minionos in core.logos:
+                displogo = '<img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/> '
+            else:
+                displogo = ''
             if isinstance(upd[server], dict):
                 processedserver.append(server)
                 if len(upd[server]) == 0:
@@ -31,15 +36,9 @@ def gendash(output, nthreads):
                                 server])) + '</a><div class=\"pkglist\" id=\"' + server + '\" style=\"display:none\"><ul>' + ''.join(
                         ['<li>{} : {}</li>'.format(k, v) for k, v in
                          collections.OrderedDict(sorted(upd[server].items())).iteritems()]) + '</ul></div>'
-                minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
-                if minionos in core.logos:
-                    displogo = '<img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/> '
-                else:
-                    displogo = ''
                 result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>' + displaypkgs + '</td></tr>\n'
             else:
-                result[server] = '<tr><td><img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/>' \
-                                 + server + '</td><td>Error during upgrades retrieveing (' + upd[server] + ')</td></tr>\n'
+                result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>Error during upgrades retrieveing (' + upd[server] + ')</td></tr>\n'
     begin = datetime.now()
     foutput = open(output, 'w')
     opts = salt.config.master_config('/etc/salt/master')
