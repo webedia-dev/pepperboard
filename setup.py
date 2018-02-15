@@ -8,11 +8,11 @@ with open('requirements.txt') as requirements_file:
 
 setup(
     name='pepperboard',
-    version='2.2',
+    version='2.3',
     packages=['pepperboard', 'pepperboard.core', 'pepperboard.dashboards'],
     scripts=['scripts/pepperboard'],
     url='https://github.com/webedia-dev/pepperboard',
-    download_url='https://github.com/webedia-dev/pepperboard/releases/tag/v2.2',
+    download_url='https://github.com/webedia-dev/pepperboard/releases/tag/v2.3',
     license='Apache',
     author='Cyril LAVIER',
     author_email='cyril.lavier@webedia-group.com',
