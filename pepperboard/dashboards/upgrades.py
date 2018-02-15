@@ -50,6 +50,9 @@ def gendash(output, nthreads):
         '<script type=\"text/javascript\">\nfunction toggle_pkglist() {\nvar e = document.querySelectorAll (\".pkglist\")\nfor (var i = 0; i < e.length; i++) {\nvar el = e[i];\nif(el.style.display == \'block\')\nel.style.display = \'none\';\nelse\nel.style.display = \'block\';\n}\n}\n</script>')
     foutput.write(
         '<script type=\"text/javascript\">\nfunction toggle_visibility(id) {\nvar e = document.getElementById(id);\nif(e.style.display == \'block\')\ne.style.display = \'none\';\nelse\ne.style.display = \'block\';\n}\n</script>')
+    foutput.write(
+        '<script>\nfunction search() {\nvar input, filter, table, tr, td, i;\ninput = document.getElementById(\"searchfield\");\nfilter = input.value.toUpperCase();\ntable = document.getElementById(\"results\");\ntr = table.getElementsByTagName(\"tr\");\nfor (i = 0; i < tr.length; i++) {\ntd = tr[i].getElementsByTagName(\"td\")[0];\nif (td) {\nif (td.innerHTML.toUpperCase().indexOf(filter) > -1) {\ntr[i].style.display = \"\";\n} else {\ntr[i].style.display = \"none\";\n}\n}\n}\n}\n</script>'
+    )
     foutput.write('<script src=\"//www.kryogenix.org/code/browser/sorttable/sorttable.js\"></script>')
     foutput.write('<style>table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: \" \\25B4\\25BE\"}')
     for os, logo in core.logos.iteritems():
@@ -67,7 +70,10 @@ def gendash(output, nthreads):
         foutput.write('All servers are up-to-date.<br/>')
     else:
         foutput.write(
-            '<a href = \"javascript:void(0);\" onclick=\"toggle_pkglist();\" style=\"color: #737373\">Toogle all lists</a></div><table class=\"pure-table pure-table-bordered sortable\"><thead><tr><th>Host</th><th class=\"sorttable_numeric\">Upgrades summary</th></tr></thead><tbody>\n')
+            '<a href = \"javascript:void(0);\" onclick=\"toggle_pkglist();\" style=\"color: #737373\">Toogle all lists</a>'
+        )
+        foutput.write('</br><input type=\"text\" id=\"searchfield\" onkeyup=\"search()\" placeholder=\"Search for hostnames...\">')
+        foutput.write('</div><table id=\"results\" class=\"pure-table pure-table-bordered sortable\"><thead><tr><th>Host</th><th class=\"sorttable_numeric\">Upgrades summary</th></tr></thead><tbody>\n')
         resultod = collections.OrderedDict(sorted(result.items()))
         for s in resultod:
             foutput.write(resultod[s])
