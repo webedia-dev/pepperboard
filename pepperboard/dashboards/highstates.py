@@ -36,7 +36,7 @@ def gendash(output, nthreads):
                         tbc) + '</ul></div>'
                     minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
                     if minionos in core.logos:
-                        displogo = '<img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/> '
+                        displogo = '<div id=\"' + minionos + '\"></div> '
                     else:
                         displogo = ''
                     result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>' + display + '</td></tr>\n'
@@ -55,7 +55,10 @@ def gendash(output, nthreads):
     foutput.write(
         '<script type=\"text/javascript\">\nfunction toggle_visibility(id) {\nvar e = document.getElementById(id);\nif(e.style.display == \'block\')\ne.style.display = \'none\';\nelse\ne.style.display = \'block\';\n}\n</script>')
     foutput.write('<script src=\"//www.kryogenix.org/code/browser/sorttable/sorttable.js\"></script>')
-    foutput.write('<style>table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: \" \\25B4\\25BE\"}</style>')
+    foutput.write('<style>table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: \" \\25B4\\25BE\"}')
+    for os, logo in core.logos.iteritems():
+        foutput.write('#'+os+'{background:url(data:image/png;base64,'+logo+') left no-repeat;height:20px;width:20px;float:left;padding-right:5px}')
+    foutput.write('</style>')
     foutput.write('<link rel=\"stylesheet\" href=\"//yui-s.yahooapis.com/pure/0.6.0/pure-min.css\">')
     foutput.write('<title>Pepperboard - Out of sync Salt States</title>')
     foutput.write('</head>')
