@@ -22,6 +22,7 @@ def gendash(output, nthreads):
         c = salt.client.LocalClient()
         hst = c.cmd(server, 'state.highstate', ['test', 'True'])
         if server in hst:
+            minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
             if isinstance(hst[server], dict):
                 for k, v in hst[server].iteritems():
                     if not v['result']:
@@ -34,15 +35,15 @@ def gendash(output, nthreads):
                         len(
                             tbc)) + ' states to be changed</a><div class=\"hstlist\" id=\"' + server + '\" style=\"display:none\"><ul>' + ''.join(
                         tbc) + '</ul></div>'
-                    minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
                     if minionos in core.logos:
                         displogo = '<div id=\"' + minionos + '\"></div> '
                     else:
                         displogo = ''
                     result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>' + display + '</td></tr>\n'
             else:
+                processedserver.append(server)
                 result[server] = '<tr><td><img src=\"data:image/png;base64,' + core.logos[minionos] + '\"/>' \
-                                 + server + '</td><td>Error during states retrieveing (' + hst[server] + ')</td></tr>\n'
+                                 + server + '</td><td>Error during states retrieveing (' + "".join(hst[server]) + ')</td></tr>\n'
     begin = datetime.now()
     foutput = open(output, 'w')
     opts = salt.config.master_config("/etc/salt/master")
