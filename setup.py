@@ -8,7 +8,7 @@ with open('requirements.txt') as requirements_file:
 
 setup(
     name='pepperboard',
-    version='2.5',
+    version='2.4',
     packages=['pepperboard', 'pepperboard.core', 'pepperboard.dashboards'],
     scripts=['scripts/pepperboard'],
     url='https://github.com/webedia-dev/pepperboard',
