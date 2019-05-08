@@ -29,6 +29,8 @@ def getmasterstatus():
     for proc in psutil.process_iter():
         if proc.name() == 'salt-master':
             return 0
+        if len(proc.cmdline()) > 0 and 'salt-master' in proc.cmdline()[0]:
+            return 0
     return 1
 
 
