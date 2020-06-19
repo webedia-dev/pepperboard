@@ -1,3 +1,2 @@
-futures>=3
 psutil
 salt

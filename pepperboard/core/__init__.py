@@ -13,15 +13,15 @@ logos = dict(
 
 
 def usage():
-    print "USAGE: " + sys.argv[0] + " [OPTIONS]"
-    print "Pepperboard : neat and simple salt dashboards"
-    print "--help|-h : Prints an awesome help message"
-    print "--output=|-o : comma separated values of files to write dashboards given with the \"-d\" argument"
-    print "--dashboards=|-d : comma separated values of dashboards"
-    print "--threads=|-t : comma separated values of threads count to be used (must be greater than 0). Prefix the number by \"f\" if you want more threads than CPU core count"
-    print "--grains=|-g : comma separated values of grains to be used with the mgrains dashboard. This argument implies \"-d 'mgrains'\""
-    print "--dellapikey=|-a : Dell API key used by the dellwarranty dashboard. This argument implies \"-d 'mgrains'\""
-    print "--list|-l : List available dashboards"
+    print("USAGE: " + sys.argv[0] + " [OPTIONS]")
+    print("Pepperboard : neat and simple salt dashboards")
+    print("--help|-h : Prints an awesome help message")
+    print("--output=|-o : comma separated values of files to write dashboards given with the \"-d\" argument")
+    print("--dashboards=|-d : comma separated values of dashboards")
+    print("--threads=|-t : comma separated values of threads count to be used (must be greater than 0). Prefix the number by \"f\" if you want more threads than CPU core count")
+    print("--grains=|-g : comma separated values of grains to be used with the mgrains dashboard. This argument implies \"-d 'mgrains'\"")
+    print("--dellapikey=|-a : Dell API key used by the dellwarranty dashboard. This argument implies \"-d 'mgrains'\"")
+    print("--list|-l : List available dashboards")
 
 
 def getmasterstatus():
@@ -44,17 +44,17 @@ def countminions():
 
 def pepper_main():
     if getmasterstatus() == 1:
-        print "Error : Your Salt Master isn't running. Exiting..."
+        print("Error : Your Salt Master isn't running. Exiting...")
         usage()
         sys.exit(2)
 
     if countminions() == 0:
-        print "Error : You don't have any minions registered to the Salt Master. Exiting..."
+        print("Error : You don't have any minions registered to the Salt Master. Exiting...")
         usage()
         sys.exit(2)
 
     if not sys.argv[1:]:
-        print "Error : Pepperboard wrongly called"
+        print("Error : Pepperboard wrongly called")
         usage()
         sys.exit(2)
 
@@ -62,7 +62,7 @@ def pepper_main():
         opts, args = getopt.getopt(sys.argv[1:], 'o:d:t:g:a:lh',
                                    ['output=', 'dashboards=', 'threads=', 'grains=', 'dellapikey=', 'list', 'help'])
     except getopt.GetoptError as err:
-        print str(err)
+        print(str(err))
         usage()
         sys.exit(2)
 
@@ -78,14 +78,14 @@ def pepper_main():
     for o, a in opts:
         if o in ("-o", "--output"):
             if not a:
-                print "Error : missing output file"
+                print("Error : missing output file")
                 usage()
                 sys.exit(2)
             else:
                 outputs = a.split(',')
         elif o in ("-t", "--threads"):
             if not a:
-                print "Error : Missing thread number"
+                print("Error : Missing thread number")
                 usage()
                 sys.exit(2)
             else:
@@ -99,28 +99,28 @@ def pepper_main():
                         except ImportError:
                             raise ImportError("You need psutil python module")
                         if int(th) > cpu_count(logical=True):
-                            print "Error : threads count cannot be greater than CPU core count unless you force it with \"f\" before the number"
+                            print("Error : threads count cannot be greater than CPU core count unless you force it with \"f\" before the number")
                             sys.exit(2)
                         elif int(th) == 0:
-                            print "Error : threads count must be greater than 0"
+                            print("Error : threads count must be greater than 0")
                             usage()
                             sys.exit(2)
                         else:
                             nthreads.append(int(th))
         elif o in ("-d", "--dashboards"):
             if not a:
-                print "Error : Missing dashboards list"
+                print("Error : Missing dashboards list")
                 usage()
                 sys.exit(2)
             else:
                 dashs = a.split(',')
                 for dash in dashs:
                     if dash not in available_dashboards:
-                        print "Error : Dashboard " + dash + " not available."
+                        print("Error : Dashboard " + dash + " not available.")
                         sys.exit(2)
         elif o in ("-g", "--grains"):
             if not a:
-                print "Error : mgrains argument must be a CSV list"
+                print("Error : mgrains argument must be a CSV list")
                 usage()
                 sys.exit(2)
             else:
@@ -129,7 +129,7 @@ def pepper_main():
                 grains = a.split(',')
         elif o in ("-a", "--dellapikey"):
             if not a:
-                print "Error : dellapikey argument can't be empty"
+                print("Error : dellapikey argument can't be empty")
                 usage()
                 sys.exit(2)
             else:
@@ -137,36 +137,36 @@ def pepper_main():
                     dashs.append("dellwarranty")
                 dellapikey = a
         elif o in ("-l", "--list"):
-            print "\n".join(available_dashboards)
+            print("\n".join(available_dashboards))
         elif o in ("-h", "--help"):
             usage()
             sys.exit(0)
         else:
-            print "Unhandled option"
+            print("Unhandled option")
 
     if 'mgrains' in dashs and len(grains) == 0:
-        print "Error : You must the grains list when using the mgrains dashboard"
+        print("Error : You must the grains list when using the mgrains dashboard")
         sys.exit(2)
 
     if 'dellwarranty' in dashs and not dellapikey:
-        print "Error : You must set the dellapikey when using the dellwarranty dashboard"
+        print("Error : You must set the dellapikey when using the dellwarranty dashboard")
         sys.exit(2)
 
     if len(nthreads) == 0:
         if not len(outputs) == len(dashs):
-            print "Error : All lists aren't the same size"
+            print("Error : All lists aren't the same size")
             sys.exit(2)
         else:
             for dash, out in zip(dashs, outputs):
                 if dash == 'mgrains':
-                    pepperboard.dashboards.gendashboard(dash, out, None, grains)
+                    pepperboard.dashboards.gendashboard(dash, out, input=grains)
                 elif dash == 'dellwarranty':
-                    pepperboard.dashboards.gendashboard(dash, out, None, dellapikey)
+                    pepperboard.dashboards.gendashboard(dash, out, input=dellapikey)
                 else:
                     pepperboard.dashboards.gendashboard(dash, out)
     else:
         if not len(outputs) == len(nthreads) == len(dashs):
-            print "Error : All lists aren't the same size"
+            print("Error : All lists aren't the same size")
             sys.exit(2)
         else:
             for dash, out, nth in zip(dashs, outputs, nthreads):
