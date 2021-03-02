@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
 
@@ -35,7 +35,7 @@ def gendash(output, nthreads):
                         len(upd[
                                 server])) + '</a><div class=\"pkglist\" id=\"' + server + '\" style=\"display:none\"><ul>' + ''.join(
                         ['<li>{} : {}</li>'.format(k, v) for k, v in
-                         collections.OrderedDict(sorted(upd[server].items())).iteritems()]) + '</ul></div>'
+                         collections.OrderedDict(sorted(upd[server].items())).items()]) + '</ul></div>'
                 result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>' + displaypkgs + '</td></tr>\n'
             else:
                 result[server] = '<tr><td valign=\"top\">' + displogo + server + '</td><td>Error during upgrades retrieveing (' + upd[server] + ')</td></tr>\n'
@@ -55,7 +55,7 @@ def gendash(output, nthreads):
     )
     foutput.write('<script src=\"//www.kryogenix.org/code/browser/sorttable/sorttable.js\"></script>')
     foutput.write('<style>table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: \" \\25B4\\25BE\"}')
-    for os, logo in core.logos.iteritems():
+    for os, logo in core.logos.items():
         foutput.write('#'+os+'{background:url(data:image/png;base64,'+logo+') left no-repeat;height:20px;width:20px;float:left;padding-right:5px}')
     foutput.write('</style>')
     foutput.write('<link rel=\"stylesheet\" href=\"//yui-s.yahooapis.com/pure/0.6.0/pure-min.css\">')

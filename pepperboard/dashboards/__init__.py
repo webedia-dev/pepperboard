@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
 import importlib
@@ -14,7 +14,7 @@ def gendashboard(ident, output, nthreads=None, input=None):
     elif "gendash" in dir(mod):
         mod.gendash(output, nthreads)
     else:
-        print "Error : gendata() or gendash() methods not found in "+mod.__name__
+        print("Error : gendata() or gendash() methods not found in "+mod.__name__)
         sys.exit(2)
 
 
@@ -35,7 +35,7 @@ def gentable(input, output):
     for header in input['headers']:
         foutput.write('<th>'+header+'</th>')
     foutput.write('</tr></thead><tbody>\n')
-    for k, v in input['data'].iteritems():
+    for k, v in input['data'].items():
         if input['ncol'] == 2:
             foutput.write('<tr><td valign=\"top\">'+str(k)+'</td><td>')
             if isinstance(v,dict):

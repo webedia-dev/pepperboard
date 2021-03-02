@@ -1,21 +1,23 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
+
+import sys
+import concurrent.futures
+import salt.client
+import salt.runner
+import collections
+import warnings
 
 
 def gendata(grains, nthreads):
-    import sys
-    import concurrent.futures
-    import salt.client
-    import salt.runner
-    import collections
-    import warnings
+
     warnings.simplefilter("ignore", DeprecationWarning)
     result = {}
     toreturn = {}
     if nthreads is None:
         nthreads = 8
     if grains is None:
-        print "Error : Grains must be specified"
+        print("Error : Grains must be specified")
         sys.exit(2)
 
     def getgrainscontent(grains, server):

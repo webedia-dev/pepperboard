@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
 
@@ -24,7 +24,7 @@ def gendash(output, nthreads):
         if server in hst:
             minionos = c.cmd(server, 'grains.items')[server]['os'].lower()
             if isinstance(hst[server], dict):
-                for k, v in hst[server].iteritems():
+                for k, v in hst[server].items():
                     if not v['result']:
                         tbc.append("<li>" + v['name'] + "</li>")
                 processedserver.append(server)
@@ -60,7 +60,7 @@ def gendash(output, nthreads):
     )
     foutput.write('<script src=\"//www.kryogenix.org/code/browser/sorttable/sorttable.js\"></script>')
     foutput.write('<style>table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: \" \\25B4\\25BE\"}')
-    for os, logo in core.logos.iteritems():
+    for os, logo in core.logos.items():
         foutput.write('#'+os+'{background:url(data:image/png;base64,'+logo+') left no-repeat;height:20px;width:20px;float:left;padding-right:5px}')
     foutput.write('</style>')
     foutput.write('<link rel=\"stylesheet\" href=\"//yui-s.yahooapis.com/pure/0.6.0/pure-min.css\">')
